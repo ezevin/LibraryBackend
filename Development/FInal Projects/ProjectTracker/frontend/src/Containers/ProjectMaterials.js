@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Header, Search, Button, Popup, Grid, List } from 'semantic-ui-react'
 
-import ProjectMaterialList from "../Components/ProjectMaterialList"
+import ProjectMaterialItem from "../Components/ProjectMaterialItem"
 
 class ProjectMaterials extends Component {
 
@@ -90,7 +90,7 @@ class ProjectMaterials extends Component {
           <Grid.Column width={4}></Grid.Column>
         </Grid>
         {this.props.materials.map(material => (
-          <ProjectMaterialList
+          <ProjectMaterialItem
             key={material.id}
             label={material.label}
             price={material.price}

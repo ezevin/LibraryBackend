@@ -3,7 +3,7 @@ import { Container, List, Grid, Button } from 'semantic-ui-react'
 
 import ProjectMaterialInfo from './ProjectMaterialInfo'
 
-class ProjectMaterialList extends Component {
+class ProjectMaterialItem extends Component {
 
   render(){
 
@@ -47,4 +47,4 @@ class ProjectMaterialList extends Component {
   }
 }
 
-export default ProjectMaterialList
+export default ProjectMaterialItem
