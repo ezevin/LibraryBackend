@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import { Route } from 'react-router-dom'
 import { } from 'react-router-dom'
-import { Header, Grid, Button, Form } from 'semantic-ui-react'
+import { Header, Grid, Form } from 'semantic-ui-react'
 
 import ItemList from '../Components/ItemList'
 
@@ -52,36 +52,38 @@ class ToDo extends Component {
   render(){
 
     return(
-      <>
-        <Header inverted color='grey' textAlign="center" as='h2'>To Do List:</Header>
+      <div className="toDoListContainer">
+        <Header inverted color='grey' className="textLead" textAlign="center" as='h2'>To Do List:</Header>
         <center>
           <Form inverted onSubmit={this.handleSubmit}>
             <center>
-              <Grid>
+              <Grid className="">
+                <Grid.Column  width={2}>
+                </Grid.Column>
                 <Grid.Column width={8}>
                   <Form.Input  placeholder="Add A New ToDo" onChange={this.handleChange}/>
                 </Grid.Column>
                 <Grid.Column>
-                  <Button type="submit">Add</Button>
+                  <button  className="button" type="submit">Add</button>
                 </Grid.Column>
               </Grid>
             </center>
           </Form>
         </center><br />
-        <Grid>
-        <Grid.Column width={3}><span>Done?</span></Grid.Column>
-        <Grid.Column width={6}><span>Task:</span></Grid.Column>
-        <Grid.Column width={3}><span>Add Picture:</span></Grid.Column>
-        <Grid.Column width={3}><span>Remove:</span></Grid.Column>
+        <Grid className=" toDoListHeader">
+        <Grid.Column width={3}><span className="textLead"><h3>Done?</h3></span></Grid.Column>
+        <Grid.Column width={4}><span className="textLead"><h3>Task:</h3></span></Grid.Column>
+        <Grid.Column width={5} textAlign="right"><span className="textLead"><h3>Add Picture:</h3></span></Grid.Column>
+        <Grid.Column width={3}><span className="textLead"><h3>Remove:</h3></span></Grid.Column>
         <Grid.Column width={3}></Grid.Column>
         </Grid>
-        <Grid columns={5} padded className="link cards ">
+        <Grid columns={5} padded className="link cards toDoListList">
           {this.props.toDoList.map(list =>(
              <><ItemList key={list.id} list={this.props.toDoList}
               fetchToDoList={this.props.fetchToDoList} toDoList={this.props.toDoList} id={list.id} complete={list.complete} item={list.item} deleteToDo={this.props.deleteToDo} handleDone={this.handleDone} pics={list.process_pic}/><br /></>
           ))}
         </Grid>
-      </>
+      </div>
     )
   }
 }

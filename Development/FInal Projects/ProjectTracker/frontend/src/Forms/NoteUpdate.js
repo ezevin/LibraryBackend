@@ -55,15 +55,19 @@ class NoteUpdate extends Component {
                 </Form>
 
     return (
+      <>
       <Popup
         content={form}
-        trigger={<Icon size="small" name='pencil alternate' />}
+        trigger={<Icon size="small" className="blue" name='pencil alternate' />}
         on='click'
         position='top left'
         open={this.state.isOpen}
         onOpen={this.handleOpen}
         onClose={this.handleClose}
             />
+
+
+    </>
 
     )
   }

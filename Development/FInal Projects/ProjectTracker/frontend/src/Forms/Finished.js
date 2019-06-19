@@ -7,7 +7,7 @@ class Finished extends Component {
   state = {
     finished: false,
     isOpen: false,
-    finished_image: "https://image.shutterstock.com/image-vector/empty-background-style-png-blank-450w-676832590.jpg"
+    finished_image: ""
   }
 
   handleOpen = () => {
@@ -26,7 +26,6 @@ class Finished extends Component {
   handleClick = () => {
     // const { finished } = this.state
     // this.setState({finished: true})
-    console.log("state",this.state);
     fetch(`http://localhost:3001/api/v1/projects/${this.props.projectId}`, {
           method: "PATCH",
           headers: {
@@ -37,7 +36,7 @@ class Finished extends Component {
         })
         .then(res=>res.json())
         .then(data => {this.setState(data)})
-        .then(this.props.history.push('/gallery'))
+        .then(() => this.props.history.push('/gallery'))
         .then(()=> this.props.fetchProjects())
   }
 
@@ -51,36 +50,49 @@ class Finished extends Component {
             Accept: 'application/json',
             'Content-type': 'application/json'
           },
-          body: JSON.stringify({ finished_image })
+          body: JSON.stringify({ finished_image, finished: true })
         })
         .then(res=>res.json())
-        .then(data => {this.setState(data)})
-        .then(()=> this.props.fetchProjects())
-        this.props.history.push('/gallery')
+        .then(data => {
+          this.setState({data})
+          this.props.fetchProjects()
+          this.props.history.push('/gallery')
+        })
+
+  }
+
+  openWidget = () => {
+    window.cloudinary.createUploadWidget(
+    {
+      cloudName: "dwmlcwpfp",
+      uploadPreset: "urxqwcln"
+    },
+    (error, result) => {
+    if(result && result.event === "success"){
+      this.setState({
+        finished_image: `https://res.cloudinary.com/${"dwmlcwpfp"}/image/upload/${result.info.path}`, uploaded: true
+      });
+    }
+    }
+  ).open()
   }
 
   render(){
     // console.log(this.props);
+    const form =   <Form type="submit" onSubmit={this.handleSubmit}>
+                      <Button type="submit">All Done</Button>
+                    </Form>
     return (
       <>
-      <Modal size="mini" open={this.state.isOpen} onOpen={this.handleOpen} trigger={<Button>I've Finished!</Button>}>
+      <Modal size="mini" open={this.state.isOpen} onOpen={this.handleOpen} trigger={<Button inverted color="teal" type="button">I've Finished!</Button>}>
         <center><Modal.Header>CONGRATULATIONS!</Modal.Header></center>
-        <Modal.Header inverted as="h6"><center>CONGRATULATIONS! <br /> Would you like to add a final image? </center></Modal.Header>
+        <Modal.Header as="h6"><center>CONGRATULATIONS! <br /> Would you like to add a final image? </center></Modal.Header>
           <Modal.Actions>
-            <Button negative onClick={this.handleClick}>No</Button>
-            <Modal size='small' trigger={<Button positive icon='checkmark' labelPosition='right' content='Yes' />}>
-              <Modal.Header>Add Picture</Modal.Header>
+            <Button type="button" negative onClick={this.handleClick}>No</Button>
+            <Modal size='small' trigger={<Button positive icon='checkmark' labelPosition='right' content='Yes'  onClick={this.openWidget}/>}>
                 <Modal.Content>
-                  <Form onSubmit={this.handleSubmit}>
-                   <Form.Field>
-                     <label>Picture URL:</label>
-                     <input onChange={this.handleChange}/>
-                   </Form.Field>
-                    <Button onClick={this.handleClick} icon='check' type="submit">All Done</Button>
-                  </Form>
+                  {form}
                 </Modal.Content>
-                <Modal.Actions>
-                </Modal.Actions>
             </Modal>
           </Modal.Actions>
       </Modal>

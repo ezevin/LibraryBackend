@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-// import { Route } from 'react-router-dom'
+
 import { } from 'react-router-dom'
-import { Header, Grid, Button, Form } from 'semantic-ui-react'
+import { Header, Grid, Form } from 'semantic-ui-react'
 
 import NoteList from '../Components/NoteList'
 
@@ -11,10 +11,10 @@ class Notes extends Component {
   }
 
   handleChange = (e) => {
-    // console.log(e.target.value);
+
     this.setState({note: e.target.value})
   }
-  //
+
   handleSubmit = (e) => {
     e.preventDefault()
     e.target.reset();
@@ -39,28 +39,30 @@ class Notes extends Component {
 
 
     return(
-      <>
-        <Header inverted color='grey' textAlign="center" as='h2'>Notes:</Header>
-        <Grid columns={5} padded className="link cards ">
+      <div className="notesContainer textAll">
+        <center>
+          <Header inverted color='grey' as='h2' className="textLead" >Notes:</Header><br />
+        </center>
+        <Grid columns={5} padded className="link cards notesList">
           {this.props.notes.map(note =>(
              <NoteList key={note.id} handleUpdate={this.handleUpdate} note={note.note} notes={this.props.notes} id={note.id} item={note.item} deleteNote={this.props.deleteNote} fetchNotes={this.props.fetchNotes} projectId={this.props.projectId} />
           ))}
         </Grid><br />
         <center>
           <Form ref="form" inverted onSubmit={this.handleSubmit}>
-            <center>
+          <center>
               <Grid>
-                <Grid.Column width={8}>
+                <Grid.Column width={12} textAlign="center">
                   <Form.TextArea  placeholder="Add A New Note" onChange={this.handleChange}/>
                 </Grid.Column>
-                <Grid.Column>
-                  <Button type="submit">Add</Button>
+                <Grid.Column width={3} textAlign="center">
+                  <button className="button" type="submit">Add</button>
                 </Grid.Column>
               </Grid>
-            </center>
+              </center>
           </Form>
         </center><br />
-      </>
+      </div>
     )
   }
 }

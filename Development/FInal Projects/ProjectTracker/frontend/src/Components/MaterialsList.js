@@ -5,41 +5,27 @@ import MaterialUpdate from '../Forms/MaterialUpdate'
 
 class MaterialsList extends Component {
 
-  state = {
-    um: []
-  }
-
-  componentDidMount(){
-    // fetch('http://localhost:3001/api/v1/user_materials')
-    // .then(res => res.json())
-    // .then(data => this.setState({um: data}))
-  }
-
   render(){
-    // const quantity = this.state.um.map(um => {
-    //   if(um.material_id === this.props.id){
-    //     return um.quantity
-    //   }} )
 
     return (
       <Container>
         <Grid >
           <Grid.Column width={3}>
             <List>
-              <List.Item><h4>{this.props.label}</h4></List.Item>
+              <List.Item><h3>{this.props.label}</h3></List.Item>
             </List>
           </Grid.Column>
-          <Grid.Column width={3}>
+          <Grid.Column width={2}>
             <List >
-              <List.Item><h4>${this.props.price}</h4></List.Item>
+              <center><List.Item><h3>${this.props.price}</h3></List.Item></center>
             </List>
           </Grid.Column>
-          <Grid.Column width={3}>
+          <Grid.Column width={5}>
             <List >
-              <List.Item><h4>{this.props.quantity}</h4></List.Item>
+              <center><List.Item><h3>{this.props.quantity}</h3></List.Item></center>
             </List>
           </Grid.Column>
-          <Grid.Column width={3}>
+          <Grid.Column width={2}>
             <List >
               <List.Item><MaterialUpdate
                 key={this.props.id}
@@ -57,7 +43,7 @@ class MaterialsList extends Component {
           </Grid.Column>
           <Grid.Column width={3}>
             <List >
-              <List.Item><h4 onClick={()=> this.props.deleteMaterial(this.props.id)}> X </h4></List.Item>
+              <List.Item><center><h3 onClick={()=> this.props.deleteMaterial(this.props.id)} className="red" textAlign="center"> X </h3></center></List.Item>
             </List>
           </Grid.Column>
         </Grid>

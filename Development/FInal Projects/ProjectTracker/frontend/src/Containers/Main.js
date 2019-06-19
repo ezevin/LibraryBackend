@@ -9,11 +9,7 @@ import Materials from './Materials'
 class Main extends Component {
   state = {
     search: '',
-    psearch: '',
-    research: [],
-    toDoList: [],
-    allNotes: [],
-    finished: []
+    psearch: ''
   }
 
   componentDidMount() {
@@ -58,8 +54,8 @@ class Main extends Component {
     return (
       <>
         <br />
-        <Grid className="look container">
-          <Grid.Column className="look" floated='left' width={8}>
+        <Grid className="">
+          <Grid.Column floated='left' width={8}>
             <Projects
               slug={this.props.slug}
               projects={filteredProjects}
@@ -84,8 +80,8 @@ class Main extends Component {
             />
           </Grid.Column>
         </Grid>
-        <Container className="look container">
-          <MainGallery projects={this.props.finished} research={this.props.research} toDoList={this.props.toDoList} allNotes={this.props.allNotes}/>
+        <Container>
+          <MainGallery projects={this.props.finished} research={this.props.research} toDoList={this.props.toDoList} allNotes={this.props.notes}/>
         </Container>
       </>
     )

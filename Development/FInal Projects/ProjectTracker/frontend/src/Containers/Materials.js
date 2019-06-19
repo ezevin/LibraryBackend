@@ -76,18 +76,29 @@ class Materials extends Component {
                 </Form>
 
     return (
-      <div className="shadow">
-        <Header inverted color='grey' textAlign="center" as='h2'>Inventory</Header>
-        <center><Search width={15} onSearchChange={this.props.handleSearch} showNoResults={false} /></center><br />
-        <div className="inventory">
+      <div className="shadowInventory">
+        <div >
           <Grid>
-            <Grid.Column width={3}><span>Item:</span></Grid.Column>
-            <Grid.Column width={3}><span>Price:</span></Grid.Column>
-            <Grid.Column width={3}><span>Quantity:</span></Grid.Column>
-            <Grid.Column width={3}></Grid.Column>
-            <Grid.Column width={3}></Grid.Column>
-          </Grid>
-          <Container className="scroll">
+            <Grid.Row>
+              <Grid.Column width={9}>
+                <Header className="textLead" inverted color='grey' textAlign="center" as='h1'>Inventory</Header>
+              </Grid.Column>
+              <Grid.Column width={5}>
+                <center><Search width={15} onSearchChange={this.props.handleSearch} showNoResults={false} /></center>
+              </Grid.Column>
+              <Grid.Column width={2}>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column width={1}><span></span></Grid.Column>
+              <Grid.Column className="textLead" width={3}><h2>Item:</h2></Grid.Column>
+              <Grid.Column className="textLead" width={3}><h2>Price:</h2></Grid.Column>
+              <Grid.Column className="textLead" width={3}><h2>Quantity:</h2></Grid.Column>
+              <Grid.Column width={2}></Grid.Column>
+              <Grid.Column className="textLead" width={3}><h2>Remove:</h2></Grid.Column>
+            </Grid.Row>
+          </Grid><br />
+          <Container className="inventory textAll">
           {this.props.materials.map(material => (
             <MaterialsList
               key={material.id}
@@ -102,7 +113,7 @@ class Materials extends Component {
           ))}</Container>
         </div>
         <br />
-        <center><Popup trigger={<Button content='Add A New Material' />}
+        <center><Popup trigger={<button className="button">Add A New Material</button>}
                   content={form}
                   on='click'
                   position='bottom right'

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom'
 import { Button, Form } from 'semantic-ui-react'
 
-// import Signup from './Signup'
 
 const initialState = {
   error: false,
@@ -25,7 +24,6 @@ class Login extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    // console.log(this.state.fields);
     fetch('http://localhost:3001/api/v1/auth',{
       method: "POST",
       headers: {
@@ -41,10 +39,8 @@ class Login extends React.Component {
       } else {
         this.props.handleUserLogin(data)
         this.props.history.push("/home")
-        // console.log("data from api", data)
       }
     })
-    // this.setState(initialState)
   };
 
   onClick = () => {
@@ -52,10 +48,9 @@ class Login extends React.Component {
   }
 
   render() {
-    // console.log('Login props', this.props);
     const { fields } = this.state
      return (
-      <div>
+      <div className="login">
         <div className="ui form error">
           {
             this.state.error &&
@@ -64,7 +59,7 @@ class Login extends React.Component {
             </div>
           }
           <center>
-            <Form inverted size='large' onSubmit={this.handleSubmit}>
+            <Form className="textAll" inverted size='large' onSubmit={this.handleSubmit}>
                 <Form.Input
                   width={5}
                   fluid icon='user'
@@ -85,10 +80,10 @@ class Login extends React.Component {
                   value={fields.password}
                   onChange={this.handleChange}/>
               <Button.Group>
-                <Button color='white'>Login</Button>
+                <Button color="black">Login</Button>
               <Button.Or />
                 <Link to='signup'>
-                <Button color='blue'>Create An Account</Button></Link>
+                <button className="button">Create An Account</button></Link>
               </Button.Group>
             </Form>
           </center>

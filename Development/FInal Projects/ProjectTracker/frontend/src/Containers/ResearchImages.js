@@ -1,12 +1,32 @@
 import React, { Component } from 'react'
-import { Header, Grid, Popup, Icon, Form, Button } from 'semantic-ui-react'
+import { Grid, Popup, Form, Button } from 'semantic-ui-react'
 
 import ResearchGallery from '../Components/ResearchGallery'
+
+const NUM_PROJECTS = 5
 
 class ResearchImages extends Component {
   state = {
     isOpen: false,
-    image: ""
+    image: "",
+    slideIndex: 0
+  }
+
+  plusSlides = (n) => {
+    let count = this.state.slideIndex+NUM_PROJECTS
+    let total = (this.props.researches.length)
+
+    if (count < total){
+      this.setState({slideIndex: this.state.slideIndex + NUM_PROJECTS})
+    }
+  }
+
+  minusSlides = (n) => {
+    let count = this.state.slideIndex+NUM_PROJECTS
+
+    if (count > 5){
+      this.setState({slideIndex: this.state.slideIndex - NUM_PROJECTS})
+    }
   }
 
   handleOpen = () => {
@@ -40,33 +60,64 @@ class ResearchImages extends Component {
         .then(()=> this.props.fetchResearchImages())
         this.setState({isOpen: false})
   }
+
+  openWidget = () => {
+    window.cloudinary.createUploadWidget(
+    {
+      cloudName: "dwmlcwpfp",
+      uploadPreset: "urxqwcln"
+    },
+    (error, result) => {
+    if(result && result.event === "success"){
+      this.setState({
+        image: `https://res.cloudinary.com/${"dwmlcwpfp"}/image/upload/${result.info.path}`, uploaded: true
+      });
+    }
+    }
+  ).open()
+  }
+
   render(){
+    const { slideIndex } = this.state
+    const displayedResearch = this.props.researches.slice(slideIndex, slideIndex + NUM_PROJECTS)
+
     const form = <Form onSubmit={this.handleSubmit}>
-                  <Form.Field>
-                    <label>Image Url:</label>
-                    <input placeholder='Title' onChange={this.handleChange}/>
-                  </Form.Field>
                   <Button type='submit'>Add Image</Button>
-                </Form>
+                 </Form>
 
     return(
-      <>
-        <Header inverted color='grey' textAlign="center" as='h2'>
-          <Popup trigger={<Icon size="small" name='add'/>}
+      <div className="look researchContainer textAll">
+        <Grid>
+          <Grid.Column textAlign="right" width={10}>
+            <h2>Research Images:</h2>
+          </Grid.Column>
+          <Grid.Column width={4}>
+            <Popup trigger={<button onClick={this.openWidget} className="button">Add Image</button>}
                   content={form}
                   on='click'
                   position='top left'
                   open={this.state.isOpen}
                   onOpen={this.handleOpen}
                   onClose={this.handleClose}
-                  />Research Images:
-        </Header>
-        <Grid columns={5} padded className="link cards ">
-          {this.props.researches.map(research =>(
-             <ResearchGallery key={research.id} research={research} id={research.id} photo={research.image} deleteResearch={this.props.deleteResearch}/>
-          ))}
+                  />
+          </Grid.Column>
         </Grid>
-      </>
+        <Grid className="">
+          <Grid.Column width={1}>
+            <button className="researchButton" onClick={this.minusSlides}>&#10094;</button>
+          </Grid.Column>
+          <Grid.Column width={14}>
+            <Grid columns={5} padded className="link cards ">
+              {displayedResearch.map(research =>(
+                 <ResearchGallery key={research.id} research={research} id={research.id} photo={research.image} deleteResearch={this.props.deleteResearch}/>
+              ))}
+            </Grid>
+          </Grid.Column>
+          <Grid.Column width={1}>
+            <button className="researchButton" onClick={this.plusSlides}>&#10095;</button>
+          </Grid.Column>
+        </Grid>
+      </div>
     )
   }
 }
